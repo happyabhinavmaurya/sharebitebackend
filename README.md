@@ -37,8 +37,8 @@ Sharebite is a Django-based backend application for a food-sharing platform wher
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/sharebite-backend.git
-   cd sharebite-backend
+   git clone https://github.com/happyabhinavmaurya/sharebitebackend.git
+   cd sharebitebackend
    ```
 
 2. Create and activate a virtual environment:
