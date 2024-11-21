@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -17,14 +16,40 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    # Set up Python environment
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
+    # Cache dependencies to speed up builds
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    # Install Dependencies
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
+    # Install system dependencies (optional)
+    - name: Install System Dependencies
+      run: sudo apt-get install -y libpq-dev build-essential
+
+    # Run migrations (if using a database)
+    - name: Run Migrations
+      run: python manage.py migrate
+
+    # Collect static files (if necessary)
+    - name: Collect Static Files
+      run: python manage.py collectstatic --noinput
+
+    # Run Tests
     - name: Run Tests
-      run: |
-        python manage.py test
+      run: python manage.py test
