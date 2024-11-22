@@ -7,3 +7,10 @@ asgiref==3.7.2
 Django==5.0.9
 sqlparse==0.4.4
 typing_extensions==4.9.0
+
+# REST framework
+djangorestframework==3.15.0
+djangorestframework-simplejwt==5.2.2  # For JWT authentication
+
+# Image handling
+Pillow==10.0.0
